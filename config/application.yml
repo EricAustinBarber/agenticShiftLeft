@@ -1,0 +1,45 @@
+application:
+  name: agentic_shift_left
+  version: 0.1.0
+  supported_input_extensions:
+    - .pbit
+  artifact_root: artifacts
+  require_human_approval_before_deployment: true
+  fail_closed_on_unsupported_features: true
+  production_authentication: entra_id
+  local_api_is_prototype_only: true
+
+identity:
+  tenant_id_env: ENTRA_TENANT_ID
+  api_audience_env: ENTRA_API_AUDIENCE
+  issuer_env: ENTRA_ISSUER
+  roles:
+    - ShiftLeft.User
+    - ShiftLeft.Reviewer
+    - ShiftLeft.Approver
+    - ShiftLeft.Operator
+  require_validated_claims_for_authorization: true
+
+pbit:
+  required_members:
+    - DataModelSchema
+    - Report
+    - Metadata
+  inventory_output: inventory/pbit-inventory.json
+
+databricks:
+  target_catalog: null
+  target_schema: null
+  sql_warehouse_id_env: DATABRICKS_SQL_WAREHOUSE_ID
+  workspace_host_env: DATABRICKS_WORKSPACE_HOST
+
+workflow:
+  stages:
+    - intake
+    - inspection
+    - interrogation
+    - design_review
+    - asset_generation
+    - runtime_validation
+    - pbit_rewrite
+    - handoff

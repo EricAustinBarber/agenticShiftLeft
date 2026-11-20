@@ -1,0 +1,18 @@
+{
+  "name": "approved-shift-left-rewrite",
+  "remove_calculated_columns": true,
+  "remove_calculated_partitions": true,
+  "table_partition_replacements": [
+    {
+      "table": "ExampleFact",
+      "expression_file": "templates/example/queries/ExampleFact.m",
+      "source_type": "m"
+    }
+  ],
+  "unapplied_query_replacements": {
+    "ExampleFact": {
+      "expression_file": "templates/example/queries/ExampleFact.m"
+    }
+  },
+  "parameter_replacements": {}
+}

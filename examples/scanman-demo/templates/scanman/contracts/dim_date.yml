@@ -1,0 +1,45 @@
+contract_version: "1.0"
+status: draft
+product: dim_scanman_date
+owner: Scanman Data Product Owner
+purpose: Provide calendar and fiscal date slicing for upload and month-end aging metrics.
+
+grain:
+  description: One row per calendar date.
+  business_key:
+    - date
+
+silver_inputs:
+  - table: prod.conformed_v.dim_date_v
+    required_columns:
+      - date
+      - year
+      - month_name
+      - first_day_of_month
+      - last_day_of_month
+      - fy_year
+      - fy_month_name
+      - etl_gold_timestamp
+    candidate_key:
+      - date
+
+transformation_rules:
+  upload_date_relationship: The PBIT relates scanman_workbench_v.UploadDate to dim_date_v.date.
+  month_axis: Preserve YearMonth, YearMonth Label, MonthStart, and MonthEnd semantics.
+  aging_as_of: Month-end aging measures must use the selected date context; do not replace them with current-date logic.
+
+gold_guarantees:
+  required_columns:
+    - date
+    - first_day_of_month
+    - last_day_of_month
+    - fy_year
+    - etl_gold_timestamp
+  required_quality_rules:
+    - no_null_date
+    - no_duplicate_date
+    - continuous_date_range_for_reporting_period
+
+change_policy:
+  fiscal_calendar_change: breaking
+  additive_nullable_column: compatible

@@ -1,0 +1,8 @@
+{
+  "name": "scanman-pilot",
+  "input_pbit": "C:\\Users\\eabarber\\CodeX\\Scanman\\PowerBi\\exe-E1 Executive Scanman Workbench.pbit",
+  "output_pbit": "examples\\scanman-demo\\artifacts\\exe-E1 Executive Scanman Workbench - shifted-left.pbit",
+  "rewrite_manifest": "examples\\scanman-demo\\config\\scanman-rewrite.manifest.json",
+  "template_root": "examples\\scanman-demo\\templates\\scanman",
+  "source_of_truth": "The original Scanman PBIT is the baseline requirements and reconciliation artifact."
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentic Shift Left</title>
+  <style>
+    :root { color-scheme: light; font-family: Segoe UI, system-ui, sans-serif; }
+    body { margin: 0; background: #f4f6f8; color: #17202a; }
+    header { background: #16324f; color: white; padding: 20px 28px; }
+    main { max-width: 1000px; margin: 24px auto; padding: 0 18px; }
+    section { background: white; border: 1px solid #d9e0e6; border-radius: 8px; padding: 18px; margin-bottom: 18px; }
+    h1, h2 { margin-top: 0; } label { display: block; margin: 10px 0 5px; font-weight: 600; }
+    input, textarea, button { font: inherit; } input, textarea { width: 100%; box-sizing: border-box; padding: 9px; border: 1px solid #b8c4ce; border-radius: 4px; }
+    textarea { min-height: 70px; } button { margin: 12px 8px 0 0; padding: 9px 14px; border: 0; border-radius: 4px; background: #1769aa; color: white; cursor: pointer; }
+    button.secondary { background: #566573; } button:disabled { opacity: .5; cursor: default; }
+    pre { white-space: pre-wrap; background: #f0f3f5; padding: 12px; border-radius: 4px; overflow: auto; }
+    .item { border-top: 1px solid #e0e5e9; padding: 14px 0; } .muted { color: #5d6d7e; }
+    .error { color: #a93226; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header><strong>Agentic Shift Left</strong><div class="muted" style="color:#d6e5f2">Local workflow console</div></header>
+  <main>
+    <section>
+      <h2>Start a shift-left run</h2>
+      <label for="pbit">Power BI template (.pbit)</label>
+      <input id="pbit" type="file" accept=".pbit">
+      <label for="scenario">Scenario ID</label>
+      <input id="scenario" value="local-pilot">
+      <button id="start">Start inspection</button>
+      <div id="start-message" class="muted"></div>
+    </section>
+
+    <section>
+      <h2>Run</h2>
+      <input id="run-id" placeholder="Run ID appears here">
+      <button id="refresh" class="secondary">Refresh status</button>
+      <button id="inspect" disabled>Run inspection agent</button>
+      <pre id="status">No run selected.</pre>
+    </section>
+
+    <section>
+      <h2>Review</h2>
+      <div id="review" class="muted">Load a run to see review questions.</div>
+      <button id="approve" class="secondary" disabled>Approve review</button>
+    </section>
+
+    <section>
+      <h2>Evidence</h2>
+      <pre id="artifacts">No run selected.</pre>
+    </section>
+  </main>
+  <script>
+    const $ = id => document.getElementById(id);
+    let reviewData = null;
+    async function api(path, options = {}) {
+      const response = await fetch(path, {headers: {'Content-Type': 'application/json'}, ...options});
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || body.detail || `HTTP ${response.status}`);
+      return body;
+    }
+    function showError(target, error) { $(target).innerHTML = `<span class="error">${error.message}</span>`; }
+    function toBase64(bytes) {
+      let binary = ''; const chunk = 8192;
+      for (let i = 0; i < bytes.length; i += chunk) binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+      return btoa(binary);
+    }
+    async function loadRun() {
+      const id = $('run-id').value.trim(); if (!id) return;
+      try {
+        const [status, review, artifacts] = await Promise.all([
+          api(`/runs/${id}`), api(`/runs/${id}/review`), api(`/runs/${id}/artifacts`)
+        ]);
+        $('status').textContent = JSON.stringify(status, null, 2);
+        $('artifacts').textContent = JSON.stringify(artifacts, null, 2);
+        reviewData = review;
+        $('review').innerHTML = review.items.map(item => `
+          <div class="item"><strong>${item.category}</strong><div>${item.question}</div>
+          <textarea data-item="${item.item_id}" placeholder="Reviewer answer">${item.answer || ''}</textarea>
+          <button data-answer="${item.item_id}">Save answer</button></div>`).join('');
+        document.querySelectorAll('[data-answer]').forEach(button => button.onclick = async () => {
+          const item = button.dataset.answer;
+          const answer = document.querySelector(`[data-item="${item}"]`).value;
+          try { await api(`/runs/${id}/review/answers`, {method:'POST', body:JSON.stringify({item_id:item, answer})}); await loadRun(); }
+          catch (error) { showError('review', error); }
+        });
+        $('inspect').disabled = false; $('approve').disabled = review.status === 'approved';
+      } catch (error) { showError('status', error); }
+    }
+    $('start').onclick = async () => {
+      const file = $('pbit').files[0]; if (!file) { $('start-message').textContent = 'Choose a .pbit file first.'; return; }
+      $('start-message').textContent = 'Reading template...';
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      try {
+        const run = await api('/runs', {method:'POST', body:JSON.stringify({filename:file.name, input_pbit_base64:toBase64(bytes), scenario_id:$('scenario').value})});
+        $('run-id').value = run.run_id; $('start-message').textContent = 'Run created.'; await loadRun();
+      } catch (error) { $('start-message').innerHTML = `<span class="error">${error.message}</span>`; }
+    };
+    $('refresh').onclick = loadRun;
+    $('inspect').onclick = async () => { try { await api(`/runs/${$('run-id').value}/agents/pbit_inspection/execute`, {method:'POST', body:'{}'}); await loadRun(); } catch (error) { showError('status', error); } };
+    $('approve').onclick = async () => { try { await api(`/runs/${$('run-id').value}/review/approve`, {method:'POST', body:JSON.stringify({comments:'Approved in local review console'})}); await loadRun(); } catch (error) { showError('review', error); } };
+  </script>
+</body>
+</html>

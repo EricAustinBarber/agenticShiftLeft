@@ -1,0 +1,35 @@
+agents:
+  pbit_inspection:
+    role: pbit-inspection-agent
+    prompt: prompts/intake/inspect-pbit-v1.md
+    skill: agent-skills/pbit-inspection/SKILL.md
+    deterministic_entrypoint: tools/inspect_pbit.py
+  interrogation:
+    role: shift-left-interrogation-agent
+    prompt: prompts/interrogation/ask-required-questions-v1.md
+    skill: agent-skills/semantic-mapping/SKILL.md
+  migration_design:
+    role: migration-design-agent
+    prompt: prompts/design/migration-design-v1.md
+    skill: agent-skills/semantic-mapping/SKILL.md
+    deterministic_entrypoint: tools/design_run.py
+  asset_generation:
+    role: governed-asset-generation-agent
+    prompt: prompts/assets/generate-assets-v1.md
+    skill: agent-skills/asset-generation/SKILL.md
+    deterministic_entrypoint: tools/generate_assets.py
+  validation:
+    role: shift-left-validation-agent
+    prompt: prompts/validation/validate-assets-v1.md
+    skill: agent-skills/validation/SKILL.md
+    deterministic_entrypoint: tools/validate_assets.py
+  release_review:
+    role: release-review-agent
+    prompt: prompts/release/release-review-v1.md
+    skill: agent-skills/validation/SKILL.md
+    deterministic_entrypoint: tools/evaluate_release.py
+  handoff:
+    role: handoff-agent
+    prompt: prompts/handoff/handoff-v1.md
+    skill: agent-skills/validation/SKILL.md
+    deterministic_entrypoint: tools/create_handoff.py

@@ -1,0 +1,43 @@
+contract_version: "1.0"
+status: draft
+product: bridge_scanman_user_project_relationship
+owner: Scanman Security Owner
+purpose: Govern the user-to-project relationship used to enforce project-scoped access.
+
+grain:
+  description: One active user-to-project relationship per source relationship key.
+  business_key:
+    - bridge_user_project_relationship_key
+
+silver_inputs:
+  - table: <catalog>.security_v.bridge_user_project_relationship_v
+    required_columns:
+      - bridge_user_project_relationship_key
+      - active_directory_users_key
+      - project_number
+      - employee_email
+      - user_principal_name
+      - source_system
+      - etlGoldTimestamp
+    candidate_key:
+      - bridge_user_project_relationship_key
+
+transformation_rules:
+  project_scope: Every relationship must resolve to a conformed project key before it is used for filtering.
+  user_scope: Every relationship must resolve to a current directory user or be reported as an orphan.
+  direction: Preserve the PBIT's bidirectional project security intent, but implement the final control in the governed consumption layer.
+
+gold_guarantees:
+  required_columns:
+    - bridge_user_project_relationship_key
+    - active_directory_users_key
+    - project_number
+    - etl_gold_timestamp
+  required_quality_rules:
+    - no_duplicate_relationship_key
+    - no_orphan_user_relationships_above_approved_threshold
+    - no_orphan_project_relationships_above_approved_threshold
+
+change_policy:
+  access_scope_change: breaking
+  additive_nullable_column: compatible

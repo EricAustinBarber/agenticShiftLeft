@@ -1,0 +1,45 @@
+contract_version: "1.0"
+status: draft
+product: dim_scanman_project_current
+owner: Scanman Data Product Owner
+purpose: Provide the governed project vocabulary used to filter and explain Scanman invoice workflow metrics.
+
+grain:
+  description: One current row per active conformed project.
+  business_key:
+    - project_number
+
+silver_inputs:
+  - table: prod.conformed_v.dim_project_v
+    required_columns:
+      - project_number
+      - project_name
+      - group
+      - region
+      - district
+      - company
+      - project_status
+      - is_active
+      - etl_gold_timestamp
+    candidate_key:
+      - project_number
+
+transformation_rules:
+  active_filter: Retain rows where etl_is_active = true, matching the PBIT behavior.
+  project_number: Preserve the source project identifier as string and publish a numeric companion only when required by a validated consumer.
+  business_unit_relationship: Do not assume Business_Unit is a project number; validate the relationship before publishing it as a conformed join.
+
+gold_guarantees:
+  required_columns:
+    - project_number
+    - project_name
+    - project_status
+    - etl_gold_timestamp
+  required_quality_rules:
+    - no_null_project_number
+    - no_duplicate_project_number
+
+change_policy:
+  additive_nullable_column: compatible
+  business_key_change: breaking
+  active_filter_change: review_required

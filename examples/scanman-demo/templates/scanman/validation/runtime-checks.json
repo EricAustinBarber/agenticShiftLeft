@@ -1,0 +1,25 @@
+{
+  "design_id": "scanman-poc-runtime-checks-template",
+  "checks": [
+    {
+      "name": "report_identity",
+      "description": "The report-facing product is populated and invoice UUIDs are complete and unique.",
+      "sql": "SELECT COUNT(*) AS total_rows, COUNT(DISTINCT ScanmanInvoiceUUID) AS distinct_invoice_uuids, SUM(CASE WHEN ScanmanInvoiceUUID IS NULL THEN 1 ELSE 0 END) AS null_invoice_uuids FROM data_governance.scanman.scanman_workbench_report"
+    },
+    {
+      "name": "aging_dimension",
+      "description": "The governed aging dimension has five complete buckets.",
+      "sql": "SELECT COUNT(*) AS aging_rows, COUNT(DISTINCT aging_bucket) AS distinct_buckets, SUM(CASE WHEN aging_bucket IS NULL OR sort_order IS NULL THEN 1 ELSE 0 END) AS incomplete_rows FROM data_governance.scanman.scanman_aging_dim"
+    },
+    {
+      "name": "security_bridge_completeness",
+      "description": "Security bridge completeness is visible for release review.",
+      "sql": "SELECT COUNT(*) AS bridge_rows, SUM(CASE WHEN active_directory_users_key IS NULL THEN 1 ELSE 0 END) AS null_user_keys, SUM(CASE WHEN project_number IS NULL THEN 1 ELSE 0 END) AS null_project_numbers FROM data_governance.scanman.bridge_scanman_user_project_relationship"
+    },
+    {
+      "name": "refresh_audit",
+      "description": "The approved refresh audit exposes current source and report timestamps.",
+      "sql": "SELECT COUNT(*) AS audit_rows, MAX(LastRefreshArizona) AS latest_report_refresh, MAX(LatestSourceRefresh) AS latest_source_refresh FROM data_governance.scanman.scanman_refresh_audit"
+    }
+  ]
+}

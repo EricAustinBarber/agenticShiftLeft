@@ -1,0 +1,12 @@
+provider:
+  # Select entra for SSO/managed identity, or api-key for isolated testing.
+  auth_mode_env: AGENT_LLM_AUTH_MODE
+  default_auth_mode: entra
+  # OpenAI-compatible chat completions endpoint.
+  endpoint_env: AGENT_LLM_ENDPOINT
+  model_env: AGENT_LLM_MODEL
+  api_key_env: AGENT_LLM_API_KEY
+  scope_env: AGENT_LLM_SCOPE
+  api_version_env: AGENT_LLM_API_VERSION
+  timeout_env: AGENT_LLM_TIMEOUT
+  default_timeout_seconds: 90

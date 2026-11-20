@@ -1,0 +1,15 @@
+product: data_governance.scanman.scanman_aging_dim
+description: Governed report-support dimension for the Scanman aging buckets.
+grain: One row per report aging bucket.
+columns:
+  - name: aging_bucket
+    type: string
+    description: PBIT-compatible aging bucket label.
+  - name: sort_order
+    type: integer
+    description: Stable display order for the aging bucket label.
+quality_rules:
+  - exactly_five_rows
+  - unique_sort_order
+  - stable_bucket_labels
+temporal_basis: Static governed reference data.

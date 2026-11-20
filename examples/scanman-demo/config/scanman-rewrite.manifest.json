@@ -1,0 +1,32 @@
+{
+  "name": "scanman-proposed-shift-left-rewrite",
+  "status": "draft",
+  "remove_calculated_columns": true,
+  "remove_calculated_partitions": true,
+  "table_partition_replacements": [
+    {"table": "scanman_workbench_v", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/scanman_workbench_report.m"},
+    {"table": "dim_project", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/dim_scanman_project_current.m"},
+    {"table": "bridge_user_project_relationship_v", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/bridge_scanman_user_project_relationship.m"},
+    {"table": "dim_active_directory_user_v", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/dim_scanman_user_current.m"},
+    {"table": "AgingDim", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/scanman_aging_dim.m"},
+    {"table": "dim_date_v", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/dim_scanman_date.m"},
+    {"table": "Last Refresh", "expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/scanman_refresh_audit.m"}
+  ],
+  "unapplied_query_replacements": {
+    "scanman_workbench_v": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/scanman_workbench_report.m"},
+    "dim_project": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/dim_scanman_project_current.m"},
+    "bridge_user_project_relationship_v": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/bridge_scanman_user_project_relationship.m"},
+    "dim_active_directory_user_v": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/dim_scanman_user_current.m"},
+    "dim_date_v": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/dim_scanman_date.m"},
+    "Last Refresh": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/scanman_refresh_audit.m"},
+    "scanman_audittrail_v": {"expression_file": "examples/scanman-demo/templates/scanman/pbit_queries/scanman_refresh_audit.m"},
+    "environment_server_name": "null meta [IsParameterQuery=true, List={\"adb-751266416173271.11.azuredatabricks.net\"}, DefaultValue=\"adb-751266416173271.11.azuredatabricks.net\", Type=\"Text\", IsParameterQueryRequired=true]",
+    "environment_http_path": "null meta [IsParameterQuery=true, List={\"/sql/1.0/warehouses/467af2fc060984c3\"}, DefaultValue=\"/sql/1.0/warehouses/467af2fc060984c3\", Type=\"Text\", IsParameterQueryRequired=true]",
+    "environment_catalog": "null meta [IsParameterQuery=true, List={\"data_governance\"}, DefaultValue=\"data_governance\", Type=\"Text\", IsParameterQueryRequired=true]"
+  },
+  "parameter_replacements": {
+    "environment_server_name": "null meta [IsParameterQuery=true, List={\"adb-751266416173271.11.azuredatabricks.net\"}, DefaultValue=\"adb-751266416173271.11.azuredatabricks.net\", Type=\"Text\", IsParameterQueryRequired=true]",
+    "environment_http_path": "null meta [IsParameterQuery=true, List={\"/sql/1.0/warehouses/467af2fc060984c3\"}, DefaultValue=\"/sql/1.0/warehouses/467af2fc060984c3\", Type=\"Text\", IsParameterQueryRequired=true]",
+    "environment_catalog": "null meta [IsParameterQuery=true, List={\"data_governance\"}, DefaultValue=\"data_governance\", Type=\"Text\", IsParameterQueryRequired=true]"
+  }
+}

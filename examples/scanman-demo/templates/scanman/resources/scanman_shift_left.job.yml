@@ -1,0 +1,96 @@
+resources:
+  jobs:
+    scanman_shift_left_refresh:
+      name: "[${bundle.target}] Scanman Shift-Left Refresh"
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      parameters:
+        - name: source_table
+          default: "${var.source_table}"
+        - name: source_project_table
+          default: "${var.source_project_table}"
+        - name: source_date_table
+          default: "${var.source_date_table}"
+        - name: source_user_table
+          default: "${var.source_user_table}"
+        - name: source_bridge_table
+          default: "${var.source_bridge_table}"
+        - name: target_catalog
+          default: "${var.target_catalog}"
+        - name: target_schema
+          default: "${var.target_schema}"
+      tasks:
+        - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/validate_scanman_source_contract.py
+            source: WORKSPACE
+        - task_key: gold_fact_scanman_invoice_current
+          depends_on:
+            - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_fact_scanman_invoice_current.py
+            source: WORKSPACE
+        - task_key: gold_fact_scanman_invoice_approval_current
+          depends_on:
+            - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_fact_scanman_invoice_approval_current.py
+            source: WORKSPACE
+        - task_key: gold_fact_scanman_invoice_aging_snapshot
+          depends_on:
+            - task_key: gold_fact_scanman_invoice_current
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_fact_scanman_invoice_aging_snapshot.py
+            source: WORKSPACE
+        - task_key: gold_dim_scanman_project_current
+          depends_on:
+            - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_dim_scanman_project_current.py
+            source: WORKSPACE
+        - task_key: gold_dim_scanman_date
+          depends_on:
+            - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_dim_scanman_date.py
+            source: WORKSPACE
+        - task_key: gold_dim_scanman_user_current
+          depends_on:
+            - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_dim_scanman_user_current.py
+            source: WORKSPACE
+        - task_key: gold_bridge_scanman_user_project_relationship
+          depends_on:
+            - task_key: validate_scanman_source_contract
+          notebook_task:
+            notebook_path: ../notebooks/silver_to_gold_bridge_scanman_user_project_relationship.py
+            source: WORKSPACE
+        - task_key: validate_scanman_gold_products
+          depends_on:
+            - task_key: gold_fact_scanman_invoice_current
+            - task_key: gold_fact_scanman_invoice_approval_current
+            - task_key: gold_fact_scanman_invoice_aging_snapshot
+            - task_key: gold_dim_scanman_project_current
+            - task_key: gold_dim_scanman_date
+            - task_key: gold_dim_scanman_user_current
+            - task_key: gold_bridge_scanman_user_project_relationship
+          notebook_task:
+            notebook_path: ../notebooks/validate_scanman_gold_products.py
+            source: WORKSPACE
+        - task_key: publish_scanman_invoice_metrics
+          depends_on:
+            - task_key: gold_fact_scanman_invoice_current
+          sql_task:
+            file:
+              path: ../semantic/scanman_invoice_metrics.sql
+              source: WORKSPACE
+            warehouse_id: "${var.sql_warehouse_id}"
+        - task_key: publish_scanman_invoice_aging_metrics
+          depends_on:
+            - task_key: gold_fact_scanman_invoice_aging_snapshot
+          sql_task:
+            file:
+              path: ../semantic/scanman_invoice_aging_metrics.sql
+              source: WORKSPACE
+            warehouse_id: "${var.sql_warehouse_id}"

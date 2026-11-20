@@ -1,0 +1,41 @@
+contract_version: "1.0"
+status: draft
+product: dim_scanman_user_current
+owner: Scanman Data Product Owner
+purpose: Provide governed identity and display attributes for Scanman assignment and project-security workflows.
+
+grain:
+  description: One current row per directory user.
+  business_key:
+    - active_directory_users_key
+
+silver_inputs:
+  - table: <catalog>.security_v.dim_active_directory_user_v
+    required_columns:
+      - active_directory_users_key
+      - user_principal_name
+      - display_name
+      - email
+      - is_internal_user
+      - is_active_directory_user
+      - etlGoldTimestamp
+    candidate_key:
+      - active_directory_users_key
+
+transformation_rules:
+  identity: Preserve user_principal_name and email for security joins; use display_name only for presentation.
+  active_status: Preserve source active indicators; do not infer employment status.
+
+gold_guarantees:
+  required_columns:
+    - active_directory_users_key
+    - user_principal_name
+    - display_name
+    - etl_gold_timestamp
+  required_quality_rules:
+    - no_null_active_directory_users_key
+    - no_duplicate_active_directory_users_key
+
+change_policy:
+  identity_key_change: breaking
+  display_name_change: compatible

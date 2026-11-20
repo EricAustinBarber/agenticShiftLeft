@@ -1,0 +1,151 @@
+<mxfile host="app.diagrams.net" modified="2026-10-23T14:35:00.000Z" agent="Codex" version="26.1.0" type="device">
+  <diagram id="agentic-shift-left-workflow" name="Agentic Shift Left Workflow">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Agentic Power BI Shift-Left Application — End-to-End Process Map" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#1f2937;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="1200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Agent-led interpretation and interrogation with deterministic generation, human approval gates, and evidence-based delivery" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontColor=#4b5563;" vertex="1" parent="1">
+          <mxGeometry x="32" y="58" width="1200" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane1" value="1. Intake &amp; Safety" style="swimlane;html=1;rounded=1;horizontal=0;startSize=28;fillColor=#eef5ff;strokeColor=#7aa7d9;fontStyle=1;fontColor=#1f3b5b;" vertex="1" parent="1">
+          <mxGeometry x="30" y="100" width="235" height="790" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" value="2. Investigate &amp; Interrogate" style="swimlane;html=1;rounded=1;horizontal=0;startSize=28;fillColor=#f5f0ff;strokeColor=#9b83c7;fontStyle=1;fontColor=#432c6e;" vertex="1" parent="1">
+          <mxGeometry x="275" y="100" width="250" height="790" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3" value="3. Design &amp; Generate" style="swimlane;html=1;rounded=1;horizontal=0;startSize=28;fillColor=#f5f0ff;strokeColor=#9b83c7;fontStyle=1;fontColor=#432c6e;" vertex="1" parent="1">
+          <mxGeometry x="535" y="100" width="265" height="790" as="geometry" />
+        </mxCell>
+        <mxCell id="lane4" value="4. Execute &amp; Validate" style="swimlane;html=1;rounded=1;horizontal=0;startSize=28;fillColor=#fff7e8;strokeColor=#d6a85d;fontStyle=1;fontColor=#6d4b10;" vertex="1" parent="1">
+          <mxGeometry x="810" y="100" width="270" height="790" as="geometry" />
+        </mxCell>
+        <mxCell id="lane5" value="5. Package &amp; Handoff" style="swimlane;html=1;rounded=1;horizontal=0;startSize=28;fillColor=#eef9f0;strokeColor=#78b982;fontStyle=1;fontColor=#245a2d;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="100" width="280" height="790" as="geometry" />
+        </mxCell>
+
+        <mxCell id="start" value="Business user uploads approved&#xa;Power BI .pbit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9eaff;strokeColor=#4779ae;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="155" width="185" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="manifest" value="Create intake manifest:&#xa;hash, version, target, authority" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9eaff;strokeColor=#4779ae;" vertex="1" parent="1">
+          <mxGeometry x="55" y="250" width="185" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="safe" value="Package supported&#xa;and safe?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="360" width="145" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="stop1" value="Stop and create&#xa;blocker/review item" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#b85450;fontColor=#7a1f1b;" vertex="1" parent="1">
+          <mxGeometry x="55" y="505" width="185" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="inventory" value="Extract PBIT inventory: queries, tables, columns, relationships, measures, pages, parameters, security" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7ddff;strokeColor=#7653a6;" vertex="1" parent="1">
+          <mxGeometry x="300" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="classify" value="Classify report-local logic, unsupported features, and likely shift-left candidates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7ddff;strokeColor=#7653a6;" vertex="1" parent="1">
+          <mxGeometry x="300" y="275" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="resolved" value="Grain, source authority, security, and metric semantics resolved?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="390" width="160" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="questions" value="Agent asks targeted questions; record answers, assumptions, and provenance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7ddff;strokeColor=#7653a6;" vertex="1" parent="1">
+          <mxGeometry x="300" y="535" width="200" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="design" value="Draft shift-left design:&#xa;data products, contracts, mappings, tests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7ddff;strokeColor=#7653a6;" vertex="1" parent="1">
+          <mxGeometry x="565" y="155" width="205" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="review1" value="Human design review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="565" y="275" width="205" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="approved1" value="Design approved?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="595" y="375" width="145" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="generate" value="Generate Databricks contracts, SQL, notebooks, DAB/job, and validation queries" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ded2f6;strokeColor=#7653a6;" vertex="1" parent="1">
+          <mxGeometry x="565" y="505" width="205" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="preview" value="Static validation + preview diff&#xa;(PBIT and generated assets)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ded2f6;strokeColor=#7653a6;" vertex="1" parent="1">
+          <mxGeometry x="565" y="625" width="205" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="passgen" value="Generated assets pass?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="875" y="155" width="145" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="repair" value="Repair, re-run checks,&#xa;or escalate exception" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#b85450;fontColor=#7a1f1b;" vertex="1" parent="1">
+          <mxGeometry x="840" y="275" width="215" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="authorize" value="Authorized deployment?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="875" y="385" width="145" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="deploy" value="Deploy and run&#xa;Databricks job" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#d69b47;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="520" width="215" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="Runtime evidence: freshness, keys, grain, relationships, metrics, security, orphans" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#d69b47;" vertex="1" parent="1">
+          <mxGeometry x="840" y="625" width="215" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="passrun" value="Runtime evidence passes?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="875" y="755" width="145" height="82" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rewrite" value="Rewrite PBIT: repoint queries, remove local objects, preserve names and lineage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="155" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="packagecheck" value="Package validation: metadata, relationships, lineage tags, and measures" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="275" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="opens" value="PBIT opens and refreshes?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#c89b2c;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1155" y="390" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="manual" value="Power BI compatibility review&#xa;or manual handoff" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8d7da;strokeColor=#b85450;fontColor=#7a1f1b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="515" width="220" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="handoff" value="Handoff package: updated PBIT, Databricks bundle/job, evidence, manifest, and run instructions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="625" width="220" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="future" value="Future extension: metric registry → insight dashboard and app" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="755" width="220" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="end" value="Complete / ready for controlled release" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=#38761d;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1155" y="835" width="150" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend" value="Legend:  Blue = agent interpretation/interrogation  •  Purple = deterministic generation/tooling  •  Green = human approval/handoff  •  Orange = Databricks execution/validation  •  Red = exception or stop path" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f4f6;strokeColor=#9ca3af;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="30" y="920" width="1340" height="38" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="start" target="manifest"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="manifest" target="safe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;" edge="1" parent="1" source="safe" target="stop1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;" edge="1" parent="1" source="safe" target="inventory"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="inventory" target="classify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="classify" target="resolved"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;" edge="1" parent="1" source="resolved" target="questions"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="Clarified" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="questions" target="resolved"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="285" y="567" /><mxPoint x="285" y="437" /></Array></mxGeometry></mxCell>
+        <mxCell id="e9" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;" edge="1" parent="1" source="resolved" target="design"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="design" target="review1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="review1" target="approved1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="No — revise" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="approved1" target="design"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="550" y="416" /><mxPoint x="550" y="187" /></Array></mxGeometry></mxCell>
+        <mxCell id="e13" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;" edge="1" parent="1" source="approved1" target="generate"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="generate" target="preview"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="preview" target="passgen"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;" edge="1" parent="1" source="passgen" target="repair"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e17" value="Repair" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="repair" target="generate"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="820" y="302" /><mxPoint x="820" y="600" /></Array></mxGeometry></mxCell>
+        <mxCell id="e18" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;" edge="1" parent="1" source="passgen" target="authorize"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e19" value="No — preview only" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="authorize" target="handoff"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1070" y="426" /><mxPoint x="1070" y="662" /></Array></mxGeometry></mxCell>
+        <mxCell id="e20" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;" edge="1" parent="1" source="authorize" target="deploy"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="deploy" target="runtime"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="runtime" target="passrun"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e23" value="No — exception" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="passrun" target="repair"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="820" y="796" /><mxPoint x="820" y="302" /></Array></mxGeometry></mxCell>
+        <mxCell id="e24" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="passrun" target="rewrite"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1385" y="796" /><mxPoint x="1385" y="140" /><mxPoint x="1230" y="140" /></Array></mxGeometry></mxCell>
+        <mxCell id="e25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="rewrite" target="packagecheck"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="packagecheck" target="opens"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e27" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#a61c00;" edge="1" parent="1" source="opens" target="manual"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e28" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;fontColor=#38761d;" edge="1" parent="1" source="opens" target="handoff"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="handoff" target="future"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="future" target="end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

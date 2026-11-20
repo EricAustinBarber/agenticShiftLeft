@@ -1,0 +1,90 @@
+contract_version: "1.0"
+status: draft_source_row_grain_validated
+product: fact_scanman_invoice_workflow_current
+owner: Scanman Data Product Owner
+purpose: Publish the reusable current Scanman invoice/workflow record used by executive workload, aging, amount, assignment, supplier, and timing metrics.
+
+grain:
+  description: One row per ScanmanInvoiceUUID at the current source refresh grain. Source profiling found 318,539 rows and 318,539 distinct UUIDs with no duplicate UUID groups.
+  candidate_business_keys:
+    - ScanmanInvoiceUUID
+    - InvoiceNumber
+    - ScanmanInvoiceUUID + CurrentStatus
+  required_decision: Keep approval/project attributes as a separately governed slice because they are populated for only 131,950 of 318,539 rows.
+
+related_products:
+  - product: fact_scanman_invoice_approval_current
+    rule: Derive only from rows with approval_status or project_number populated; retain the parent ScanmanInvoiceUUID.
+
+silver_inputs:
+  - table: prod.operation_financials_v.scanman_workbench_v
+    required_columns:
+      - etl_gold_timestamp
+      - ScanmanInvoiceUUID
+      - InvoiceNumber
+      - SupplierName
+      - TotalGrossAmount
+      - InvoiceDate
+      - InvoiceDueDate
+      - GLDate
+      - UploadDate
+      - CurrentStatus
+      - CurrentStatusDescription
+      - NextStatus
+      - NextStatusDescription
+      - AssignedTo
+      - DaysOpen
+      - Aging Days
+      - Aging Bucket
+      - Business_Unit
+      - project_number
+      - approval_status
+      - approval_limit
+      - amount
+      - date_updated
+    candidate_key:
+      - ScanmanInvoiceUUID
+
+transformation_rules:
+  status_order: Preserve the PBIT status ordering 050, 110, 720, 740, 795, 797, then other.
+  numeric_business_unit: Preserve the tolerant numeric conversion used by the PBIT as a separate field; do not discard the original string.
+  aging_bucket: Preserve the report bucket definitions and publish bucket sort order separately.
+  invoice_identity: Distinct invoice measures must explicitly state whether they use ScanmanInvoiceUUID or InvoiceNumber.
+  date_semantics: Preserve InvoiceDate, InvoiceDueDate, GLDate, UploadDate, and DateUpdated as separate business dates.
+  approval_fields: Treat approval fields as untrusted for additive aggregation until their row grain is profiled.
+  negative_amounts: Preserve negative/credit rows; apply metric-specific inclusion rules rather than deleting them in the product.
+
+gold_guarantees:
+  required_columns:
+    - scanman_invoice_uuid
+    - invoice_number
+    - supplier_name
+    - total_gross_amount
+    - current_status
+    - upload_date
+    - aging_days
+    - aging_bucket
+    - etl_gold_timestamp
+  required_quality_rules:
+    - one_row_per_scanman_invoice_uuid
+    - no_invalid_status_order
+    - no_unparseable_required_business_dates
+    - amount_reconciliation_to_source
+    - explicit_unknown_or_null_identity_handling
+  temporal_basis: Current-state refresh unless a separate status snapshot/event product is approved.
+
+profiling_evidence:
+  source_rows: 318539
+  distinct_scanman_invoice_uuid: 318539
+  blank_invoice_number_rows: 26529
+  approval_project_population_rows: 131950
+  base_invoice_population_rows: 186589
+  active_project_match_rows_by_business_unit: 291919
+  unmatched_active_project_rows_by_business_unit: 26620
+  relationship_warning: Raw dim_project_v contains repeated project_number values across historical rows; join only to the active conformed slice and validate uniqueness before publishing.
+
+change_policy:
+  grain_change: breaking
+  invoice_identity_change: breaking
+  metric_filter_change: review_required
+  additive_nullable_column: compatible

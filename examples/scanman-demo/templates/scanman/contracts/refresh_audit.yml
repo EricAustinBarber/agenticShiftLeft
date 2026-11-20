@@ -1,0 +1,17 @@
+product: data_governance.scanman.scanman_refresh_audit
+description: Governed refresh metadata used by Scanman report and agent surfaces.
+grain: One row for the current published invoice-product refresh state.
+columns:
+  - name: LastRefreshArizona
+    type: timestamp
+    description: Latest source ETL timestamp converted to America/Phoenix.
+  - name: LatestSourceRefresh
+    type: timestamp
+    description: Latest source ETL timestamp in warehouse timestamp semantics.
+  - name: ReportSurfaceRefreshedAt
+    type: timestamp
+    description: Timestamp when the refresh-audit view was queried, in America/Phoenix.
+quality_rules:
+  - one_row
+  - source_refresh_not_null_when_invoice_product_is_not_empty
+temporal_basis: Current published product state.

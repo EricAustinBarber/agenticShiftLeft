@@ -1,0 +1,53 @@
+contract_version: "1.0"
+status: draft
+product: fact_scanman_invoice_approval_current
+owner: Scanman Data Product Owner
+purpose: Publish approval-routing and project-scoped attributes for the subset of current Scanman invoice records where those attributes are populated.
+
+grain:
+  description: One row per parent ScanmanInvoiceUUID with approval/project attributes populated at the current source refresh.
+  business_key:
+    - scanman_invoice_uuid
+
+silver_inputs:
+  - table: prod.operation_financials_v.scanman_workbench_v
+    required_columns:
+      - ScanmanInvoiceUUID
+      - project_number
+      - approval_status
+      - approval_limit
+      - person_responsible
+      - creation_date
+      - released_by
+      - released_date
+      - code_approval_routing
+      - reason
+      - comments
+      - date_updated
+      - etl_gold_timestamp
+    candidate_key:
+      - ScanmanInvoiceUUID
+
+transformation_rules:
+  population_filter: Retain rows where approval_status IS NOT NULL OR project_number IS NOT NULL.
+  parent_identity: Join back to the invoice product only by ScanmanInvoiceUUID; never join by InvoiceNumber alone.
+  project_scope: Resolve project_number against the active project dimension; preserve unmatched project identifiers for data-quality reporting.
+  date_fields: Preserve source numeric date fields as JDE CYYDDD values; convert only through an explicit, tested CYYDDD conversion and retain the raw values for audit.
+
+gold_guarantees:
+  required_columns:
+    - scanman_invoice_uuid
+    - project_number
+    - approval_status
+    - etl_gold_timestamp
+  required_quality_rules:
+    - one_row_per_scanman_invoice_uuid
+    - no_cross_invoice_join
+    - explicit_unmatched_project_handling
+    - source_numeric_date_encoding_validated
+  temporal_basis: Current-state refresh.
+
+change_policy:
+  grain_change: breaking
+  approval_semantics_change: breaking
+  additive_nullable_column: compatible
